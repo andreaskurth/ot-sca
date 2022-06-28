@@ -1,0 +1,54 @@
+# Name of the ChipWhisperer project file to use. Not required. If not provided,
+# projects/opentitan_simple_aes.cwp is used.
+project_file: projects/opentitan_simple_aes.cwp
+# Name of the trace file containing the numpy array with all traces in 16-bit 
+# integer format. Not required. If not provided, the data from the ChipWhisperer
+# project file is used. Ignored for number-of-steps > 1.
+trace_file: null
+# Index of the first trace to use. Not required. If not provided, starts at the
+# first trace.
+trace_start: null
+# Index of the last trace to use. Not required. If not provided, ends at the
+# last trace.
+trace_end: null
+# Name of the leakage file containing the numpy array with the leakage model for
+# all rounds, all bytes, and all traces. Not required. If not provided, the
+# leakage is computed from the data in the ChipWhisperer project file. Ignored
+# for number-of-steps > 1.
+leakage_file: null
+# Save trace, leakage and t-test files to disk. Ignored for trace and leakage
+# files when number-of-steps > 1.
+save_to_disk: True
+# Index of the AES round for which the histograms are to be computed: 0-10. Not
+# required. If not provided, the histograms for all AES rounds are computed.
+round_select: null
+# Index of the AES state byte for which the histograms are to be computed: 0-15.
+# Not required. If not provided, the histograms for all AES state bytes are
+# computed.
+byte_select: null
+# Name of the input file containing the histograms. Not required. If both
+# -input_file and -output_file are provided, the input file is appended with
+# more data to produce the output file.
+input_file: null
+# Name of the output file to store generated histograms. Not required. If both
+# -input_file and -output_file are provided, the input file is appended with 
+# more data to produce the output file.
+output_file: null
+# Number of steps to breakdown the analysis into. For every step, traces are
+# separately filtered and the leakage is computed. The histograms are appended
+# to the ones of the previous step. This is useful when operating on very large
+# trace sets and/or when analyzing how results change with the number of traces
+# used.
+number_of_steps: 10
+# Name of the t-test step file containing one t-test analysis per step. Not
+# required. If not provided, the data is recomputed.
+ttest_step_file: null
+# Plot figures and save them to disk. Not required.
+plot_figures: True
+# Perform general fixed-vs-random TVLA without leakage model. Odd traces are
+# grouped in the fixed set while even traces are grouped in the random set. Not
+# required.
+general_test: True
+# Select mode: can be either "aes" or "sha3". Not required. If not provided or
+# if another string is provided, "aes" is used.
+mode: aes
