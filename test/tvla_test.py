@@ -4,8 +4,8 @@
 
 import numpy as np
 
-from .cmd import Args
-from .repo import RepoCmd
+from .cmd import Args, Cmd
+from .repo import REPO_PATH, RepoCmd
 
 
 class TvlaCmd(RepoCmd):
@@ -31,12 +31,20 @@ def ttest_significant(ttest_trace) -> bool:
 
 
 def test_general_leaking_histogram():
-    tvla = TvlaCmd(Args('-g -i test/data/tvla_general/sha3_hist_leaking')).run()
+    # TODO: Remove the following line once defaults are taken from the Typer definitions.
+    Cmd(Args(['cp', REPO_PATH / 'cw/cw305/tvla_aes.yaml', '.'])).run()
+    tvla = TvlaCmd(Args(['run-tvla', '--no-plot-figures',
+                         '--input-file', 'test/data/tvla_general/sha3_hist_leaking.npz'])
+                   ).run()
     assert ttest_significant(np.load('tmp/ttest.npy')), (
            f"{tvla} did not find significant leakage, which is unexpected")
 
 
 def test_general_nonleaking_histogram():
-    tvla = TvlaCmd(Args('-g -i test/data/tvla_general/sha3_hist_nonleaking')).run()
+    # TODO: Remove the following line once defaults are taken from the Typer definitions.
+    Cmd(Args(['cp', REPO_PATH / 'cw/cw305/tvla_aes.yaml', '.'])).run()
+    tvla = TvlaCmd(Args(['run-tvla', '--no-plot-figures',
+                         '--input-file', 'test/data/tvla_general/sha3_hist_nonleaking.npz'])
+                   ).run()
     assert not ttest_significant(np.load('tmp/ttest.npy')), (
            f"{tvla} did find significant leakage, which is unexepcted")
